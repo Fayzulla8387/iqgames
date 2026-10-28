@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IQ Arena – mantiq va algoritmik fikrlash oʻyinlari</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#/" aria-label="IQ Arena bosh sahifa">
+      <!-- Logotip: 4 ta disk bir diagonalda -->
+      <span class="logo"><i></i><i></i><i></i><i></i></span>IQ Arena
+    </a>
+    <button id="player-btn" class="btn small" type="button">👤 Mehmon</button>
+  </header>
+
+  <main>
+    <!-- BOSH SAHIFA: oʻyinlar kartalari app.js tomonidan #grid ichiga chiziladi -->
+    <section id="home">
+      <div class="hero">
+        <h1>Oʻylang. Rejalashtiring. Yeching.</h1>
+        <p>Oltita mantiqiy oʻyin: uchtasi klassik, uchtasi bizning original ixtiromiz. Har biri alohida fikrlash qobiliyatini charxlaydi.</p>
+      </div>
+      <div id="grid" class="grid"></div>
+    </section>
+
+    <!-- OʻYIN SAHIFASI: sahna + qoidalar + reyting -->
+    <section id="game" hidden>
+      <div class="game-head">
+        <a class="btn small" href="#/">← Barcha oʻyinlar</a>
+        <h2 id="g-title"></h2>
+      </div>
+      <div class="game-layout">
+        <div class="panel" id="stage"></div>
+        <aside class="side">
+          <div class="panel">
+            <h3>Qoidalar</h3>
+            <ol id="g-rules" class="rules"></ol>
+            <p class="skill"><b>Rivojlantiradi:</b> <span id="g-skill"></span></p>
+          </div>
+          <div class="panel">
+            <h3>Eng yaxshi natijalar</h3>
+            <ol id="g-board" class="board-list"></ol>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer>IQ Arena – talabalar va oʻquvchilar uchun mantiq maktabi</footer>
+
+  <!-- Yuklash tartibi muhim: 1) yadro, 2) oʻyinlar. file:// orqali ham ishlaydi (server shart emas) -->
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/connect4.js"></script>
+  <script src="js/blockade.js"></script>
+  <script src="js/hanoi.js"></script>
+  <script src="js/net-architect.js"></script>
+  <script src="js/logic-circuit.js"></script>
+  <script src="js/gravity-grid.js"></script>
+</body>
+</html>

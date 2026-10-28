@@ -1,0 +1,135 @@
+/* ===== IQ Arena – dizayn =====
+   Gʻoya: katakli daftar varagʻi + qalin siyoh chiziqlari + "stiker" soyalar.
+   Rang tokenlari :root da — keyin mavzuni oson almashtirish mumkin. */
+:root{
+  --paper:#f4f7fb; --grid:#dfe7f2; --ink:#1b2340; --muted:#5b6585;
+  --coral:#ff5d5d; --sun:#ffc933; --teal:#19c3a6; --violet:#7b61ff; --sky:#3b82f6;
+  --r:16px;
+  --font:ui-rounded,"Avenir Next","Trebuchet MS","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{
+  margin:0; font:16px/1.5 var(--font); color:var(--ink); background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px; min-height:100vh; display:flex; flex-direction:column;
+}
+main{width:100%; max-width:1120px; margin:0 auto; padding:20px 16px 40px; flex:1}
+h1,h2,h3{line-height:1.15; margin:0 0 .5em}
+:focus-visible{outline:3px solid var(--violet); outline-offset:2px}
+
+/* --- Yuqori panel --- */
+.top{display:flex; justify-content:space-between; align-items:center; padding:12px 16px;
+  background:#fff; border-bottom:2px solid var(--ink)}
+.brand{display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.25rem; color:var(--ink); text-decoration:none}
+.logo{display:grid; grid-template-columns:repeat(2,14px); gap:3px; transform:rotate(-8deg)}
+.logo i{width:14px; height:14px; border-radius:50%; border:2px solid var(--ink)}
+.logo i:nth-child(1){background:var(--coral)} .logo i:nth-child(2){background:var(--sun)}
+.logo i:nth-child(3){background:var(--teal)}  .logo i:nth-child(4){background:var(--violet)}
+
+/* --- Tugmalar va umumiy elementlar --- */
+.btn{font:inherit; font-weight:700; padding:10px 16px; border:2px solid var(--ink); border-radius:12px;
+  background:#fff; color:var(--ink); box-shadow:0 3px 0 var(--ink); cursor:pointer; text-decoration:none; display:inline-block}
+.btn:active{transform:translateY(2px); box-shadow:0 1px 0 var(--ink)}
+.btn.small{padding:6px 12px; font-size:.9rem}
+.btn.accent{background:var(--teal)} .btn.ghost{background:var(--paper)}
+.btn:disabled{opacity:.45; cursor:not-allowed}
+select{font:inherit; padding:8px 10px; border:2px solid var(--ink); border-radius:10px; background:#fff; color:var(--ink)}
+.panel{background:#fff; border:2px solid var(--ink); border-radius:var(--r); padding:16px; box-shadow:0 4px 0 var(--ink)}
+.row,.btn-row{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:center; margin:10px 0}
+.status,.msg{min-height:1.6em; font-weight:700; text-align:center; margin:10px 0}
+.hud{display:flex; flex-wrap:wrap; gap:8px; justify-content:center}
+.hud span{background:var(--paper); border:2px solid var(--ink); border-radius:999px; padding:2px 12px; font-weight:600}
+
+/* --- Bosh sahifa --- */
+.hero{padding:28px 0 24px; max-width:640px}
+.hero h1{font-size:clamp(2rem,6vw,3.4rem); font-weight:900; letter-spacing:-.02em}
+.hero p{color:var(--muted); font-size:1.1rem; margin:0}
+.grid{display:grid; gap:20px; grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.card{display:flex; flex-direction:column; gap:6px; padding:18px; border:2px solid var(--ink); border-radius:var(--r);
+  background:#fff; color:var(--ink); text-decoration:none; box-shadow:0 5px 0 var(--ink); transition:transform .12s,box-shadow .12s}
+.card:hover{transform:translateY(-3px); box-shadow:0 8px 0 var(--ink)}
+.card.original{background:var(--c)}              /* original oʻyinlar rangli, klassiklar oq */
+.card.soon{opacity:.6; pointer-events:none}
+.card .icon{font-size:2.4rem}
+.card h3{margin:0; font-size:1.3rem}
+.card p{margin:0; flex:1; font-size:.95rem}
+.tag{align-self:flex-start; font-size:.8rem; font-weight:700; border:2px solid var(--ink); border-radius:999px; padding:0 10px; background:#fff}
+.tag.off{background:var(--paper)}
+
+/* --- Oʻyin sahifasi --- */
+.game-head{display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:16px}
+.game-head h2{margin:0; font-size:1.6rem}
+.game-layout{display:grid; gap:20px; grid-template-columns:1fr}
+.side{display:grid; gap:20px; align-content:start}
+.rules{padding-left:20px; margin:0 0 10px} .rules li{margin-bottom:6px}
+.skill{margin:0; padding:8px 12px; background:var(--paper); border-radius:10px; font-size:.95rem}
+.board-list{list-style:none; margin:0; padding:0}
+.board-list li{display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed var(--grid)}
+.board-list .empty{color:var(--muted)}
+footer{text-align:center; padding:16px; color:var(--muted); font-size:.9rem}
+@media(min-width:900px){.game-layout{grid-template-columns:1fr 330px}}
+
+/* --- Connect 4 --- */
+.c4-board{display:grid; grid-template-columns:repeat(7,1fr); gap:8px; padding:12px; max-width:520px; margin:0 auto;
+  background:var(--sky); border:3px solid var(--ink); border-radius:20px; box-shadow:0 6px 0 var(--ink)}
+.c4-cell{aspect-ratio:1; border-radius:50%; border:2px solid var(--ink); background:#fff; position:relative; cursor:pointer; padding:0}
+.c4-board:not(.locked) .c4-cell:hover{background:#e4ecff}
+.c4-board.locked .c4-cell{cursor:default}
+.c4-cell::after{content:""; position:absolute; inset:-2px; border-radius:50%; border:2px solid var(--ink); display:none}
+.c4-cell.p1::after,.c4-cell.p2::after{display:block}
+.c4-cell.p1::after{background:radial-gradient(circle at 35% 30%,#ff9a9a,var(--coral) 60%)}
+.c4-cell.p2::after{background:radial-gradient(circle at 35% 30%,#ffe58a,var(--sun) 60%)}
+.c4-cell.drop::after{animation:drop .45s cubic-bezier(.5,0,.9,.6)}  /* --r = qator raqami: yuqoridan pastga tushish */
+.c4-cell.win::after{box-shadow:0 0 0 4px #fff,0 0 0 7px var(--ink); animation:pulse .7s infinite alternate}
+@keyframes drop{from{transform:translateY(calc((var(--r) + 1) * -112%))}}
+@keyframes pulse{to{transform:scale(1.08)}}
+
+/* --- Tarmoq Meʼmori (Canvas) --- */
+.na-canvas{display:block; width:100%; aspect-ratio:4/3; margin-top:12px; background:var(--paper);
+  border:2px solid var(--ink); border-radius:12px; touch-action:manipulation; cursor:pointer}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+
+/* --- Blockade --- */
+.bk-board{display:grid; grid-template-columns:repeat(6,1fr 16px) 1fr; grid-template-rows:repeat(6,1fr 16px) 1fr; aspect-ratio:1; max-width:480px; margin:0 auto}
+.bk-cell{background:#fff; border:2px solid var(--ink); border-radius:10px; position:relative}
+.bk-cell.g0{background:#ffe3e3} .bk-cell.g1{background:#fff3c4}          /* maqsad qatorlari: sizniki pushti, AI niki sariq */
+.bk-cell.ok{background:#d3f7ee; cursor:pointer}
+.bk-cell.me::after,.bk-cell.ai::after{content:""; position:absolute; inset:14%; border-radius:50%; border:2px solid var(--ink)}
+.bk-cell.me::after{background:var(--coral)} .bk-cell.ai::after{background:var(--sun)}
+.bk-h,.bk-v{cursor:pointer; background:rgba(123,97,255,.12); border-radius:4px}   /* devor oraligʻi mobilda ham koʻrinsin */ .bk-h:hover,.bk-v:hover{background:#d9d2ff}
+.bk-h.on,.bk-v.on,.bk-x.on{background:var(--ink); cursor:default}
+
+/* --- Tower of Hanoi --- */
+.hn-pegs{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; height:270px; margin-top:12px}
+.hn-peg{position:relative; display:flex; flex-direction:column-reverse; align-items:center; border-bottom:8px solid var(--ink); border-radius:8px; cursor:pointer}
+.hn-peg::before{content:""; position:absolute; bottom:0; width:10px; height:92%; background:var(--ink); border-radius:5px 5px 0 0}
+.hn-peg.sel{background:#e4defe}
+.hn-disk{height:26px; margin-top:2px; border:2px solid var(--ink); border-radius:8px; position:relative; z-index:1; transition:transform .15s}
+.hn-disk.lift{transform:translateY(-16px)}
+
+/* --- Eshiklar Zanjiri --- */
+.lc-svg{display:block; width:100%; height:auto; background:var(--paper); border:2px solid var(--ink); border-radius:12px}
+.lc-slot{cursor:pointer}
+.lc-tray{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:12px 0}
+.lc-tok.sel{background:var(--sun)}
+.lc-tt{border-collapse:collapse; margin:8px auto; font-size:.85rem}
+.lc-tt th,.lc-tt td{border:1px solid var(--ink); padding:2px 10px; text-align:center}
+.lc-tt .ok{background:#d3f7ee} .lc-tt .bad{background:#ffe0e0}
+
+/* --- Burilish Katagi --- */
+.gg-wrap{width:100%; max-width:420px; margin:14px auto; aspect-ratio:1}
+.gg-board{position:relative; width:100%; height:100%; display:grid; grid-template-columns:repeat(6,1fr); grid-template-rows:repeat(6,1fr);
+  background:#fff; border:3px solid var(--ink); border-radius:14px; overflow:hidden; box-shadow:0 5px 0 var(--ink); transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.gg-c{border:1px solid var(--grid)}
+.gg-c.w{background:var(--ink); border-color:var(--ink)}
+.gg-c.tb::after,.gg-c.tr::after{content:""; display:block; margin:18%; aspect-ratio:1; border:3px dashed}
+.gg-c.tb::after{border-color:var(--sky); border-radius:50%} .gg-c.tr::after{border-color:var(--coral); border-radius:6px}
+.gg-blk{position:absolute; width:calc(100% / 6); height:calc(100% / 6); transition:left .32s cubic-bezier(.55,0,.9,.55),top .32s cubic-bezier(.55,0,.9,.55)}
+.gg-blk i{position:absolute; inset:12%; border:2px solid var(--ink)}
+.gg-blk.b i{background:var(--sky); border-radius:50%} .gg-blk.r i{background:var(--coral); border-radius:6px}
+.gg-blk.on i{box-shadow:0 0 0 4px var(--teal)}
+.gg-legend{display:flex; gap:18px; justify-content:center; font-weight:600; font-size:.9rem}
+.gg-lg{display:inline-block; width:16px; height:16px; border:2px solid var(--ink); vertical-align:-3px}
+.gg-lg.b{background:var(--sky); border-radius:50%} .gg-lg.r{background:var(--coral); border-radius:4px}
